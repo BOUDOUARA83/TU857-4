@@ -1,0 +1,12 @@
+
+
+•	If you mouse over the node at the intersection between the inductor and 100 ohm resistor, you'll see the voltage at that point. The voltage may be changing as the inductor charges up. It should eventually converge to a stable value	5V
+
+Resistors
+What is the voltage at the node just underneath the 400 ohm resistor if I do the following: 
+•	Flip all the switches on, except the switch for the 100 ohm resistor on the top and switch the bypasses the resistors on the bottom, both of which should be off. (½ mark) 	1.8V
+•	Flip all the switches off, except the switch for the 100 ohm resistor on the top and the switch that bypasses all the resistors at the bottom, both of which should be on. (1 mark) 	 0 V
+•	Flip all the switches at the top off, except the 800 ohm resistor (which should be on), and flip all the switches at the bottom to on, except the switch that bypasses the resistors, which should be off. (1 mark) 	789.474 mv
+
+Transistors
+When the switch is flipped on, what is the voltage at the wire between the switch and the transistor's base? (1 mark)	668.597 mv
