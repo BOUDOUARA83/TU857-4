@@ -1,1 +1,361 @@
+Advanced security 1 – Assignment 1 
+Ethar Boudouara
+C20452282
+
+
+
+How to make a web browser more secure?
+
+1.	Serve over HTTPS and redirect HTTP to HTTPS:
+
+HTTPS is a way which shows users that their site is secure and legitimate. HTTPS uses encryption to protect and secure information when it is being sent between the client and the server. Information being sent will be difficult to intercept such as credit card information as well as passwords.
+
+You Can also try to use Virtual private network. VPN creates a web browsing session and it make sure that users are able to secure their own data. It’s important to use a VPN when using a public WiFi  to prevent Hackers to track other people information and Data they share. 
+VPN creates a tunnel between a user’s computer and the VPN server, which hides their online activity and location.
+
+The Applications I would use to check who is tracking my data are Panopticlick, Disconnect and Thunderbeam, these are few of many application out there that allows you to see who is following you.
+
+
+Q2
+
+Ceaser cipher 
+
+
+Python program to that demonestrate Ceaser Cipher Technique
+
+#The function encrypt takes the text and t and performs a simple Ceaser cipher encryption on the texted that is entered
+def encrypt(text, t):
+    ans = ""
+    # it iterates through each character of the input
+    for x in range(len(text)):
+        ch = text[x]
+
+        # if the ch is a space character, it is appended as is to the answer string
+        if ch == " ":
+            ans += " "
+        # if the ch is an uppercase letter it is encrypted by shiffting it by t postions in the alphabet
+        # The character is first converted to its ASCII code using ord (ch) then the shift is applied and converted back to a character ucing ch(..)
+        elif (ch.isupper()):
+            ans += chr((ord(ch) + t - 65) % 26 + 65)
+
+        # check if a character is lowercase then encrypt it accordingly
+
+        else:
+            ans += chr((ord(ch) + t - 97) % 26 + 97)
+
+#After processing all characters in the input text the function returns the encrypted result stored in the ans string
+    return ans
+
+#outside the function definition, the code sets a plaintext string "HELLO EVERYONE" and a shift value t equal 1
+plaintext = "HELLO EVERYONE"
+t = 1
+print("Plain Text is : " + plaintext)
+print("Shift pattern is : " + str(t))
+print("Cipher Text is : " + encrypt( plaintext, t))
+
+
+
+
+
+Vigenere Cipher 
+
+
+
+# Python code to implement
+# Vigenere Cipher
+
+
+def generateKey(string, key):
+    key = list(key)
+    if len(string) == len(key):
+        return (key)
+    else:
+        for i in range(len(string) -
+                       len(key)):
+            key.append(key[i % len(key)])
+    return ("".join(key))
+
+
+# This function returns the
+# encrypted text generated
+# with the help of the key
+def Text(string, key):
+    c_text = []
+    for i in range(len(string)):
+        x = (ord(string[i]) +
+             ord(key[i])) % 26
+        x += ord('A')
+        c_text.append(chr(x))
+    return ("".join(c_text))
+
+
+# This function decrypts the
+# encrypted text and returns
+# the original text
+def originalText(c_text, key):
+    orig_text = []
+    for i in range(len(c_text)):
+        x = (ord(c_text[i]) -
+             ord(key[i]) + 26) % 26
+        x += ord('A')
+        orig_text.append(chr(x))
+    return ("".join(orig_text))
+
+
+# Driver code
+if __name__ == "__main__":
+    string = "HELLOWORLD"
+    keyword = "ETHAR"
+    key = generateKey(string, keyword)
+    c_text = Text(string, key)
+    print("Ciphertext :", c_text)
+    print("Decrypted Text :",
+          originalText(c_text, key))
+
+
+
+
+
+Q3
+
+def caesar_decrypt(ciphertext, shift):
+    plaintext = ""
+
+    for char in ciphertext:
+        if char.isalpha():
+            if char.isupper():
+                decrypted_char = chr(((ord(char) - ord('A')) - shift) % 26 + ord('A'))
+            else:
+                decrypted_char = chr(((ord(char) - ord('a')) - shift) % 26 + ord('a'))
+        else:
+            decrypted_char = char
+
+        plaintext += decrypted_char
+
+    return plaintext
+
+
+# Example usage
+ciphertext = """RQH YDULDWLRQ WR WKH VWDQGDUG FDHVDU FLSKHU LV ZKHQ WKH
+DOSKDEHW LV "NHBHG" EB XVLQJ D ZRUG. LQ WKH WUDGLWLRQDO
+YDULHWB, RQH FRXOG ZULWH WKH DOSKDEHW RQ WZR VWULSV DQG
+MXVW PDWFK XS WKH VWULSV DIWHU VOLGLQJ WKH ERWWRP VWULS WR
+WKH OHIW RU ULJKW. WR HQFRGH, BRX ZRXOG ILQG D OHWWHU LQ WKH
+WRS URZ DQG VXEVWLWXWH LW IRU WKH OHWWHU LQ WKH ERWWRP URZ.
+IRU D NHBHG YHUVLRQ, RQH ZRXOG QRW XVH D VWDQGDUG DOSKDEHW,
+EXW ZRXOG ILUVW ZULWH D ZRUG (RPLWWLQJ GXSOLFDWHG OHWWHUV)
+DQG WKHQ ZULWH WKH UHPDLQLQJ OHWWHUV RI WKH DOSKDEHW. IRU
+WKH HADPSOH EHORZ, L XVHG D NHB RI "UXPNLQ.FRP" DQG BRX ZLOO VHH
+WKDW WKH SHULRG LV UHPRYHG EHFDXVH LW LV QRW D OHWWHU. BRX
+ZLOO DOVR QRWLFH WKH VHFRQG "P" LV QRW LQFOXGHG EHFDXVH
+WKHUH ZDV DQ P DOUHDGB DQG BRX FDQ'W KDYH GXSOLFDWHV."""
+shift = 3
+plain_text = caesar_decrypt(ciphertext, shift)
+
+print("Decrypted Text:")
+print(plain_text)
+
+
+
+
+Decrypted Text:
+ONE VARIATION TO THE STANDARD CAESAR CIPHER IS WHEN THE
+ALPHABET IS "KEYED" BY USING A WORD. IN THE TRADITIONAL
+VARIETY, ONE COULD WRITE THE ALPHABET ON TWO STRIPS AND
+JUST MATCH UP THE STRIPS AFTER SLIDING THE BOTTOM STRIP TO
+THE LEFT OR RIGHT. TO ENCODE, YOU WOULD FIND A LETTER IN THE
+TOP ROW AND SUBSTITUTE IT FOR THE LETTER IN THE BOTTOM ROW.
+FOR A KEYED VERSION, ONE WOULD NOT USE A STANDARD ALPHABET,
+BUT WOULD FIRST WRITE A WORD (OMITTING DUPLICATED LETTERS)
+AND THEN WRITE THE REMAINING LETTERS OF THE ALPHABET. FOR
+THE EXAMPLE BELOW, I USED A KEY OF "RUMKIN.COM" AND YOU WILL SEE THAT THE PERIOD IS REMOVED BECAUSE IT IS NOT A LETTER. YOU
+WILL ALSO NOTICE THE SECOND "M" IS NOT INCLUDED BECAUSE
+THERE WAS AN M ALREADY AND YOU CAN'T HAVE DUPLICATES.
+
+
+
+Q4
+
+def caesar_decrypt(text, shift):
+    decrypted_text = ""
+    for char in text:
+        if char.isalpha():
+            if char.isupper():
+                decrypted_char = chr(((ord(char) - shift - 65) % 26) + 65)
+            else:
+                decrypted_char = chr(((ord(char) - shift - 97) % 26) + 97)
+        else:
+            decrypted_char = char
+        decrypted_text += decrypted_char
+    return decrypted_text
+
+def caesar_key(ciphertext):
+    for shift in range(26):
+        decrypted_text = caesar_decrypt(ciphertext, shift)
+        if "THE" in decrypted_text or "AND" in decrypted_text or "IS" in decrypted_text:
+        # Check if the decrypted text contains common English words or phrases
+            return shift
+    return None
+
+# Encrypted message
+encrypted_text = """FEV MRIZRKZFE KF KYV JKREURIU TRVJRI TZGYVI ZJ NYVE KYV RCGYRSVK
+ZJ "BVPVU" SP LJZEX R NFIU. ZE KYV KIRUZKZFERC MRIZVKP, FEV TFLCU
+NIZKV KYV RCGYRSVK FE KNF JKIZGJ REU ALJK DRKTY LG KYV JKIZGJ
+RWKVI JCZUZEX KYV SFKKFD JKIZG KF KYV CVWK FI IZXYK. KF VETFUV, PFL
+NFLCU WZEU R CVKKVI ZE KYV KFG IFN REU JLSJKZKLKV ZK WFI KYV
+CVKKVI ZE KYV SFKKFD IFN. WFI R BVPVU MVIJZFE, FEV NFLCU EFK LJV R
+JKREURIU RCGYRSVK, SLK NFLCU WZIJK NIZKV R NFIU (FDZKKZEX
+ULGCZTRKVU CVKKVIJ) REU KYVE NIZKV KYV IVDRZEZEX CVKKVIJ FW KYV
+RCGYRSVK. WFI KYV VORDGCV SVCFN, Z LJVU R BVP FW "ILDBZE.TFD" REU
+PFL NZCC JVV KYRK KYV GVIZFU ZJ IVDFMVU SVTRLJV ZK ZJ EFK R CVKKVI.
+PFL NZCC RCJF EFKZTV KYV JVTFEU "D" ZJ EFK ZETCLUVU SVTRLJV KYVIV
+NRJ RE D RCIVRUP REU PFL TRE'K YRMV ULGCZTRKVJ."""
+
+# Find the Caesar key
+the_caesar_key = caesar_key(encrypted_text)
+
+if the_caesar_key is not None:
+    print(f"The Caesar key is: {the_caesar_key}")
+else:
+    print("Caesar key not found.")
+
+
+The Caesar key is: 17
+
+
+
+
+Q5
+
+def vigenere_decrypt(text, key):
+    dec_text = ""
+    keyword_length = len(key)
+    
+    for i in range(len(text)):
+        char = text[i]
+        if char.isalpha():
+            # Calculate the shift value based on the keyword
+            keyword_shift = ord(key[i % keyword_length]) - ord('A')
+            
+            if char.isupper():
+                decrypted_char = chr(((ord(char) - keyword_shift - 65) % 26) + 65)
+            else:
+                decrypted_char = chr(((ord(char) - keyword_shift - 97) % 26) + 97)
+        else:
+            decrypted_char = char
+        dec_text += decrypted_char
+    
+    return dec_text
+
+# Encrypted message
+text = """
+XQKP IZ IMWEB LK AUVZCXKW PHL VPE RIKD ASOZZSBZI TOIE ESTD XEJWXM
+CPS-3. PHPA TA DPW NEZCWB YN S OIE-GPIB KGIPLBTBSWF, WNK UJ WGV KGEPV
+TA YVW KF APP NSDW NETITVSVY BIUIWQCBK (KUA WQ IX QFETPIW 64). QD'A
+HNOIIMTI BGK LHBP NYZ EA TV IQNOKL PHL NTVKT VACPATWX, JMP I HU
+SWZQFC FVZ "YW KESND." PB'D VYB LDAA BSM XMO DAZP QCXKLEOUA LZOV'L
+WNF OZWN, QL'O TOIE EO LGJ'T YMLTVG FAEK WYM. GPWJ WL AEIBBWZ TOQD
+XBWUASZ JLKU QF 2006, ET SWZSOL SO IM EP EYCDZ BL VPMNQFC A UMH PKAZ
+BUUKEQYV KKOU. BSM CPS BATQWG (GPAYH PA CMKTDU PHZE WP BZA MK4 IYL
+WL5 XWMPTJ), EKA MJDLZ TVMZWWSPVR XBMKOUYM QZYU FAW AGAMC WX
+YRFXEIXIDUSPA. HM NQVJ'T RVZE RWO HOUO EPO DSNIVCD ARI-2 NWRPIYBC
+EGQLK ZPUKQF OEJCCM. LCL ET'Z 2012, IYL CPS-512 ES ZBTTV TGKKPVR OYWV.
+"""
+
+# Keyword used for decryption
+key = "KISWAHILI"
+
+# Decrypt the message
+decrypted_message = vigenere_decrypt(text, key)
+
+# Print the decrypted message
+print("Decrypted Message:")
+print(decrypted_message)
+
+
+
+Decrypted Message:
+
+PYOP AO YEEIB DZ QMDDCQCL FZT VIW JYCL ALGORITHM MGXW WAXD PTBMPU
+CIK-3. XLPT IS VXA GWOUMT CN K GYW-KPBT CWAXPBMTHOV, AND JB OOZ DYTHL
+BE RNL AX EPI CKTO REMAINING BBMXOGUJO (CJS OY IQ FXULXMW 64). YH'T
+WFEAQQTB QYA TLBI CQP ME MN AGFWOL HWD FBZKM KSSHIXWQ, BCH M AM
+KMRYJC XKR "GA DWHFT." PU'S LQJ LWSP RKU XFG VQRX QVPZDUGCE ERDN'D
+ANY DRMF, QE'D JGQI XG DWB'X REALLY JAXC OOE. GIOY MD EEBTQOP BSQW
+MTMMIWZ BACK YJ 2006, MX LOOKED WO AB UH IYVVO RD ZPFFFXS I UFZ HASH
+BNMZWGQD KDGJ. TAQ VHH RSBUWZ (YFSGL IS UCCBHU HWRU ET URP CC4 IRD
+OB5 BWFHIB), IKT BBTDH TOEOOMKXZR PQEAGCCM IOQK NEW SVSCU AX
+QGXNWQBIWMHHQ. LM FFNZ'B RORT HOW HHMD UHW DLFXNSV ERB-2 DOZTIRTR
+UYYPK REMAIN OXBRUC. PCE TL'R 2012, YQT CIK-512 IS RQLJN XGDCENH WCWO.
+
+
+
+
+Q6 
+
+#hill cipher
+keyMatrix = [[0] * 2 for i in range(2)]
+
+#Generating the vector for the message
+messageVector = [[0] for i in range(2)]
+
+# Generating the vector for the cipher
+cipherMatrix = [[0] for i in range(2)]
+
+#generating the key matrix for the key string
+def getKeyMatrix(key):
+    k = 0
+    for i in range(2):
+        for j in range(2):
+            keyMatrix[i][j] = ord(key[k]) % 65
+            k += 1
+
+#encrypting the message
+def encrypt(messageVector):
+    for i in range(2):
+        for j in range(1):
+            cipherMatrix[i][j] = 0
+            for x in range(2):
+                cipherMatrix[i][j] += (keyMatrix[i][x] *
+                                    messageVector[x][j])
+            cipherMatrix[i][j] = cipherMatrix[i][j] % 26
+
+def HillCipher(message, key):
+
+    #getting key matrix from the key string
+    getKeyMatrix(key)
+
+    #generate vector for the message
+    for i in range(2):
+        messageVector[i][0] = ord(message[i]) % 65
+
+    # Following function generates
+    # the encrypted vector
+    encrypt(messageVector)
+
+    #Generating encrypted text from the encrypted vector
+    CipherText = []
+    for i in range(2):
+        CipherText.append(chr(cipherMatrix[i][0] + 65))
+
+    #printing the ciphertext
+    print("Ciphertext: ", "".join(CipherText))
+
+#Driver Code
+def main():
+
+    #the message that will be encrypted
+    message = "CAKE"
+
+    #the key
+    key = "BAKE"
+
+    HillCipher(message, key)
+
+if __name__ == "__main__":
+    main()
+
+
+
+
 
