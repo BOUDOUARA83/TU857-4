@@ -1,0 +1,13 @@
+This is an overview of how the code works 
+
+Accept domains passed as command line arguments: Yes, the code accepts a domain as a command-line argument.
+
+Send valid DNS requests: The code constructs a DNS query, sends it to a DNS server, and receives the response, which covers this requirement.
+
+Receive and parse the DNS response: The code receives and parses the DNS response using the read_datagram function and processes the answers.
+
+Support for both IPv4 and IPv6: The code makes two separate requests, one for IPv4 (A QTYPE) and another for IPv6 (AAAA QTYPE). It processes and displays the results for both IP versions.
+
+Human-readable output: The code provides human-readable output for both IPv4 and IPv6 addresses,
+as well as for canonical names. IPv4 addresses are displayed as four unsigned decimal numbers separated by dots, 
+IPv6 addresses are displayed in the required format, and canonical names are displayed as domains separated by dots
