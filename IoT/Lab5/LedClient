@@ -1,1 +1,29 @@
 
+import requests
+
+def set_brightness(pi_ip, brightness):
+    url = f"http://{pi_ip}:8000/set_brightness"
+    payload = {'brightness': brightness}
+    try:
+        response = requests.post(url, json=payload)
+        if response.status_code == 200:
+            print("Brightness set successfully.")
+        else:
+            print(f"Failed to set brightness. Status code: {response.status_code}")
+    except requests.exceptions.RequestException as e:
+        print(f"Failed to connect to Raspberry Pi: {e}")
+
+def main():
+    pi_ip = input("Enter Raspberry Pi IP address: ")
+    
+    try:
+        brightness = float(input("Enter brightness value (0-1): "))
+        if 0 <= brightness <= 1:
+            set_brightness(pi_ip, brightness)
+        else:
+            print("Brightness value must be between 0 and 1.")
+    except ValueError:
+        print("Invalid input. Please enter a numeric value between 0 and 1.")
+
+if __name__ == "__main__":
+    main()
