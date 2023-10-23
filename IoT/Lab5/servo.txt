@@ -1,0 +1,23 @@
+from gpiozero import PWMOutputDevice, Servo
+from flask import Flask, request
+import time
+
+app = Flask(__name)
+
+# Create a Servo object connected to GPIO 17 (you can change the pin number)
+servo = Servo(17)
+
+@app.route('/servo', methods=['GET'])
+def set_servo_angle():
+    try:
+        angle = float(request.args.get('angle'))
+        if 0 <= angle <= 1:
+            servo.value = angle
+            return "Servo angle set to {}".format(angle), 200
+        else:
+            return "Invalid angle. Angle must be between 0 and 1.", 400
+    except ValueError:
+        return "Invalid input. Please provide a numeric angle value.", 400
+
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port=8000)
