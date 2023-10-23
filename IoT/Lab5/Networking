@@ -1,1 +1,53 @@
 
+from http.server import BaseHTTPRequestHandler, HTTPServer
+from gpiozero import PWMLED
+import urllib.parse
+
+# Create a PWMLED instance to control the LED
+led = PWMLED(12)
+
+class RequestHandler(BaseHTTPRequestHandler):
+    def do_GET(self):
+        try:
+            parsed_path = urllib.parse.urlparse(self.path)
+            if parsed_path.path == '/led':
+                query = urllib.parse.parse_qs(parsed_path.query)
+                if 'value' in query:
+                    brightness = float(query['value'][0])
+                    # Make sure brightness is between 0 and 1
+                    brightness = max(0, min(1, brightness))
+                    # Set the LED brightness
+                    led.value = brightness
+                    self.send_response(200)
+                    self.send_header('Content-type', 'text/plain')
+                    self.end_headers()
+                    self.wfile.write(b'Brightness set to ' + str(brightness).encode())
+                else:
+                    self.send_response(400)
+                    self.send_header('Content-type', 'text/plain')
+                    self.end_headers()
+                    self.wfile.write(b'Missing "value" parameter in the query.')
+            else:
+                self.send_response(404)
+                self.send_header('Content-type', 'text/plain')
+                self.end_headers()
+                self.wfile.write(b'Not Found')
+        except Exception as e:
+            self.send_response(500)
+            self.send_header('Content-type', 'text/plain')
+            self.end_headers()
+            self.wfile.write(str(e).encode())
+
+def run_server(server_class=HTTPServer, handler_class=RequestHandler, port=8000):
+    server_address = ('', port)
+    httpd = server_class(server_address, handler_class)
+    print(f'Starting the HTTP server on port {port}...')
+    try:
+        httpd.serve_forever()
+    except KeyboardInterrupt:
+        pass
+    httpd.server_close()
+
+if _name_ == '_main_':
+    run_server()
+
