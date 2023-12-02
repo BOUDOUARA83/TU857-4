@@ -1,0 +1,11 @@
+Dig @127.0.0.1 example.lan
+Dig @127.0.0.1 -x 10.20.30.41
+
+dhcp-lease-list 
+
+sudo mount 192.168.1.10:/home/ahmad/shared nfs_dir
+nfs works
+
+wget ftp://192.168.1.10/my_file.txt
+
+router works
